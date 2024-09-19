@@ -1,1 +1,2 @@
 # chuyendephattrienweb1_2024
+type_hint
