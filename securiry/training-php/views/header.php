@@ -1,7 +1,11 @@
 <?php
+require_once 'models/UserModel.php';
+$userModel = new UserModel();
 $id = '';
-if(!empty($_SESSION['id'])) {
+$encoded_id = '';
+if (!empty($_SESSION['id'])) {
     $id = $_SESSION['id'];
+    $encoded_id = $userModel->encode_id($id); // Mã hóa ID
 }
 
 $keyword = '';
@@ -43,7 +47,7 @@ if(!empty($_GET['keyword'])) {
                             Account <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="view_user.php?id=<?php echo $id ?>">Profile</a></li>
+                            <li><a href="view_user.php?id=<?php echo $encoded_id ?>">Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="login.php">Login</a></li>
                             <li><a href="logout.php">Logout</a></li>

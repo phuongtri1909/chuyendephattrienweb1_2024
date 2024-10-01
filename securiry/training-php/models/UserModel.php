@@ -4,6 +4,22 @@ require_once 'BaseModel.php';
 
 class UserModel extends BaseModel {
 
+     private $secret_key = '#(@:455$^';
+
+     public function encode_id($id) {
+         return base64_encode(hash_hmac('sha256', $id, $this->secret_key, true));
+     }
+ 
+     public function decode_id($encoded_id) {
+         $decoded_id = base64_decode($encoded_id);
+         for ($i = 1; $i <= 1000; $i++) { // Giả sử ID không vượt quá 1000
+             if (hash_hmac('sha256', $i, $this->secret_key, true) === $decoded_id) {
+                 return $i;
+             }
+         }
+         return NULL;
+     }
+
     public function findUserById($id) {
         $sql = 'SELECT * FROM users WHERE id = '.$id;
         $user = $this->select($sql);
@@ -97,4 +113,6 @@ class UserModel extends BaseModel {
 
         return $users;
     }
+
+
 }
